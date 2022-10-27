@@ -1,23 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, ImageBackground, TouchableWithoutFeedback, Keyboard, SafeAreaView } from 'react-native';
 import StartGameScreen from './screens/StartGameScreen';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
+import { Colors } from './utils/colors';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
 export default function App() {
     const [userNumber, setUserNumber] = useState();
+    const [isGameOver, setIsGameOver] = useState(false);
+    const [rounds, setRounds] = useState(0);
+
+    const [fontsLoaded] = useFonts({
+        'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+        'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+    });
 
     const startGameHandler = (selectedNumber) => {
         setUserNumber(selectedNumber);
+        setIsGameOver(false);
     };
+    useEffect(() => {
+        async function prepare() {
+            await SplashScreen.preventAutoHideAsync();
+        }
+        prepare();
+    }, []);
 
-    if (userNumber) {
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
+        return null;
     }
-
     return (
         <LinearGradient
-            colors={['#8b0000', '#9acd32']}
+            colors={[Colors.secondary, Colors.primary]}
             style={styles.container}
         >
             <TouchableWithoutFeedback
@@ -30,8 +53,29 @@ export default function App() {
                     source={require('./assets/images/background.png')}
                     imageStyle={styles.image}
                 >
-                    <SafeAreaView style={styles.container}>
-                        {userNumber ? <GameScreen /> : <StartGameScreen onNumberEnter={startGameHandler} />}
+                    <SafeAreaView
+                        onLayout={onLayoutRootView}
+                        style={styles.container}
+                    >
+                        {userNumber && isGameOver ? (
+                            <GameOverScreen
+                                userNumber={userNumber}
+                                roundsNumber={rounds}
+                                onStartNewGame={() => {
+                                    setUserNumber(null);
+                                    setIsGameOver(false);
+                                    setRounds(0);
+                                }}
+                            />
+                        ) : userNumber ? (
+                            <GameScreen
+                                isGameOver={setIsGameOver}
+                                userNumber={userNumber}
+                                onSetRounds={setRounds}
+                            />
+                        ) : (
+                            <StartGameScreen onNumberEnter={startGameHandler} />
+                        )}
                     </SafeAreaView>
                 </ImageBackground>
             </TouchableWithoutFeedback>

@@ -2,21 +2,23 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { Colors } from '../utils/colors';
 
+
 function Title({ text }) {
     return <Text style={styles.title}>{text}</Text>;
 }
 
 const styles = StyleSheet.create({
     title: {
+        fontFamily: 'open-sans-bold',
         fontSize: 20,
         fontWeight: 'bold',
-        color: Colors.primary,
+        color: Colors.moccasin,
         textAlign: 'center',
         borderWidth: 2,
-        borderColor: Colors.primary,
+        borderColor: Colors.darkslate,
         borderRadius: 10,
         padding: 8,
-        marginVertical: 16,
+        margin: 18,
     },
 });
 

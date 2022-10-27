@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         opacity: 0.7,
     },
     texts: {
+        fontFamily: 'open-sans-bold',
         color: Colors.moccasin,
     },
 });

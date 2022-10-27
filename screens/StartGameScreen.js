@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { StyleSheet, TextInput, View, Keyboard, Alert } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
+import Title from '../components/Title';
 import { Colors } from '../utils/colors';
+import Card from '../components/Card';
 
 function StartGameScreen(props) {
     const [enteredNumber, setEnteredNumber] = useState('');
@@ -23,22 +25,26 @@ function StartGameScreen(props) {
     };
 
     return (
-        <View style={styles.inputContainer}>
-            <TextInput
-                style={styles.numberInput}
-                maxLength={2}
-                keyboardType={'number-pad'}
-                value={enteredNumber}
-                onChange={(event) => setEnteredNumber(event.nativeEvent.text)}
-            />
-            <View style={styles.buttonsContainer}>
-                <View style={styles.button}>
-                    <PrimaryButton onPress={resetGameState}>Reset</PrimaryButton>
+        <View style={styles.wrapper}>
+            <Title text='Guess My Number' />
+            <Card>
+                <Title text='Entered Your Number' />
+                <TextInput
+                    style={styles.numberInput}
+                    maxLength={2}
+                    keyboardType={'number-pad'}
+                    value={enteredNumber}
+                    onChange={(event) => setEnteredNumber(event.nativeEvent.text)}
+                />
+                <View style={styles.buttonsContainer}>
+                    <View style={styles.button}>
+                        <PrimaryButton onPress={resetGameState}>Reset</PrimaryButton>
+                    </View>
+                    <View style={styles.button}>
+                        <PrimaryButton onPress={confirmInput}>Confirm</PrimaryButton>
+                    </View>
                 </View>
-                <View style={styles.button}>
-                    <PrimaryButton onPress={confirmInput}>Confirm</PrimaryButton>
-                </View>
-            </View>
+            </Card>
         </View>
     );
 }
@@ -46,35 +52,26 @@ function StartGameScreen(props) {
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
-    inputContainer: {
-        marginTop: 100,
-        padding: 16,
-        backgroundColor: Colors.darkslate,
-        borderRadius: 10,
-        marginHorizontal: 16,
-        shadowColor: Colors.darkblue,
-        shadowOffset: { width: 0, height: 10 },
-        shadowRadius: 10,
-        shadowOpacity: 0.7,
-        elevation: 4,
-        justifyContent: 'center',
-        alignItems: 'center',
+    wrapper: {
+        flex: 1,
+        flexDirection: 'column',
+        marginTop: 16,
     },
     numberInput: {
-        height: 50,
         fontSize: 32,
         borderBottomColor: Colors.teal,
         borderBottomWidth: 2,
         color: Colors.teal,
-        marginVertical: 8,
+        marginBottom: 8,
         fontWeight: 'bold',
-        width: 80,
+        width: '100%',
         textAlign: 'center',
     },
     buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignContent: 'center',
+        fontFamily: 'open-sans-bold',
     },
     button: {
         flex: 1,
