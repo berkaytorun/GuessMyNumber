@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import { Colors } from '../utils/colors';
 
 function Card({ children }) {
@@ -7,7 +7,7 @@ function Card({ children }) {
 
 const styles = StyleSheet.create({
     card: {
-        marginTop: 50,
+        marginTop: 25,
         padding: 16,
         backgroundColor: Colors.darkslate,
         borderRadius: 10,
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         elevation: 4,
         justifyContent: 'center',
         alignItems: 'center',
+        width: Dimensions.get('window').width * 0.88,
     },
 });
 

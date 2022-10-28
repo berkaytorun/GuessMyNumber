@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import { Colors } from '../utils/colors';
 
 function NumberContainer({ number }) {
@@ -12,12 +12,12 @@ function NumberContainer({ number }) {
 const styles = StyleSheet.create({
     container: {
         padding: 16,
-        alignContent: 'center',
         justifyContent: 'center',
         borderWidth: 2,
         borderColor: Colors.primary,
         borderRadius: 10,
         marginVertical: 16,
+        width: Dimensions.get('window').width * 0.88,
     },
     text: {
         fontFamily: 'open-sans-bold',

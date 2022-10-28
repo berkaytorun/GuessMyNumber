@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         flexDirection: 'column',
+        alignItems: 'center',
         marginTop: 16,
     },
     numberInput: {

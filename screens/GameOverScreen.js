@@ -1,8 +1,8 @@
-import { Image, Text, View, StyleSheet } from 'react-native';
+import { Image, Text, View, StyleSheet, Dimensions } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import Title from '../components/Title';
 import { Colors } from '../utils/colors';
-function GameOverScreen({roundsNumber,userNumber,onStartNewGame}) {
+function GameOverScreen({ roundsNumber, userNumber, onStartNewGame }) {
     return (
         <View style={styles.wrapper}>
             <Title text='Game Over' />
@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     imageContainer: {
-        width: 300,
-        height: 300,
-        borderRadius: 150,
+        width: Dimensions.get('window').width * 0.7,
+        height: Dimensions.get('window').width * 0.7,
+        borderRadius: (Dimensions.get('window').width * 0.7) / 2,
         borderWidth: 3,
         borderColor: Colors.slate,
         overflow: 'hidden',

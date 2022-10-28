@@ -24,13 +24,13 @@ let maxBoundary = 100;
 function GameScreen({ userNumber, isGameOver, onSetRounds }) {
     const initialGuess = generateRandomNumber(minBoundary, maxBoundary, userNumber, userNumber);
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
-
     const [rounds, setRounds] = useState([initialGuess]);
 
     useEffect(() => {
         if (currentGuess === userNumber) {
             minBoundary = 1;
             maxBoundary = 100;
+            onSetRounds(rounds.length);
             isGameOver(true);
         }
     }, [currentGuess, userNumber, isGameOver]);
@@ -64,7 +64,6 @@ function GameScreen({ userNumber, isGameOver, onSetRounds }) {
         const newRandomNumber = generateRandomNumber(minBoundary, maxBoundary, currentGuess, userNumber);
         setCurrentGuess(newRandomNumber);
         setRounds((currentRounds) => [newRandomNumber, ...currentRounds]);
-        onSetRounds((currentRounds) => currentRounds + 1);
     };
 
     return (
@@ -77,16 +76,14 @@ function GameScreen({ userNumber, isGameOver, onSetRounds }) {
                     <View style={styles.button}>
                         <PrimaryButton onPress={() => nextGuessHandler('lower')}>Less</PrimaryButton>
                     </View>
-                    <View
-                        style={styles.button}
-                        s
-                    >
+                    <View style={styles.button}>
                         <PrimaryButton onPress={() => nextGuessHandler('greater')}>More</PrimaryButton>
                     </View>
                 </View>
             </Card>
-            <View>
+            <View style={styles.listContainer}>
                 <FlatList
+                    showsVerticalScrollIndicator={false}
                     data={rounds}
                     renderItem={(itemData) => (
                         <LogItem
@@ -105,16 +102,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
+        alignItems: 'center',
     },
     buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     },
-
     button: {
         flex: 1,
         alignItems: 'stretch',
+    },
+    listContainer: {
+        flex: 1,
+        padding: 16,
     },
 });
 
